@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown matches the snapshot 1`] = `
+<div>
+  <div
+    class="relative z-30 inline-block w-64 text-left sm:hidden md:inline"
+  >
+    <button
+      aria-expanded="true"
+      aria-haspopup="true"
+      class="inline-flex w-full justify-center gap-x-1.5 py-2 text-sm font-semibold text-gray-900 hover:font-bold hover:text-gray-950"
+      data-testid="dropdown"
+      id="menu-button"
+    >
+      Filter
+      <img
+        alt="Arrow down"
+        data-nimg="1"
+        decoding="async"
+        height="20"
+        loading="lazy"
+        src="arrowDown.svg"
+        style="color: transparent;"
+        width="20"
+      />
+    </button>
+    <div
+      aria-labelledby="menu-button"
+      aria-orientation="vertical"
+      class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      role="menu"
+      tabindex="-1"
+    >
+      <button
+        class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 false"
+        data-testid="dropdown-option"
+        id="menu-item-1"
+        role="menuitem"
+        tabindex="-1"
+      >
+        First option
+      </button>
+    </div>
+  </div>
+</div>
+`;

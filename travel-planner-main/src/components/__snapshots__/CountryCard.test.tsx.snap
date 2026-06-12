@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CountryCard matches the snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col rounded bg-white pb-4"
+  >
+    <a
+      class="flex flex-col gap-2 sm:w-[133px] md:w-[200px]"
+      href="/country/FR"
+    >
+      <div
+        class="relative w-full sm:h-[100px] md:h-[150px]"
+      >
+        <img
+          alt="France"
+          class="relative z-10 rounded-tl rounded-tr"
+          data-nimg="1"
+          decoding="async"
+          height="150"
+          loading="lazy"
+          src="/flags/fr.svg"
+          style="color: transparent;"
+          width="200"
+        />
+        <div
+          class="absolute inset-0 z-20 bg-gradient-to-t from-black/25 to-transparent"
+        />
+      </div>
+      <p
+        class="line-clamp-2 h-12 text-wrap px-4 font-semibold"
+      >
+        France
+      </p>
+    </a>
+    <label
+      class="mx-4 mt-2 flex items-center"
+    >
+      <input
+        class="h-6 w-6 rounded border-gray-300 text-[#1d1d1f]"
+        type="checkbox"
+      />
+      <span
+        class="ml-2 text-sm font-medium text-[#1d1d1f]"
+      >
+        Compare
+      </span>
+    </label>
+  </div>
+</div>
+`;

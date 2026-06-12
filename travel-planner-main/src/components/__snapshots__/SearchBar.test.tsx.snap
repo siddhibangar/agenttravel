@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar matches the snapshot 1`] = `
+<div>
+  <div
+    class="flex h-12 w-full items-center rounded border border-gray-300 shadow-md focus-within:ring focus-within:ring-blue-200"
+  >
+    <input
+      class="h-full flex-grow p-4 focus:outline-none rounded"
+      placeholder="Search"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
