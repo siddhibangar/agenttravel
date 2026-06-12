@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WanderPlan - Interactive Travel Planner</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 2L11 13"></path>
+          <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+        <span>WanderPlan</span>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <a href="#" class="menu-item active" id="nav-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="menu-item" id="nav-webhook-settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>n8n Integration</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar">SB</div>
+          <div class="user-info">
+            <span class="user-name">Siddhi B.</span>
+            <span class="user-status">n8n Connected</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header Bar -->
+      <header class="app-header">
+        <div class="header-search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" placeholder="Search destinations, activities..." id="global-search">
+        </div>
+        <div class="header-actions">
+          <div class="sync-badge connected" id="cloud-sync-status">
+            <span class="pulse-dot"></span>
+            <span class="sync-text">Cloud Sync Ready</span>
+          </div>
+          <button class="btn btn-primary" id="btn-create-trip-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            New Trip
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: Dashboard -->
+      <section class="view-section active" id="dashboard-view">
+        <div class="dashboard-hero">
+          <div class="hero-content">
+            <h1>Explore the World, Your Way</h1>
+            <p>Plan itineraries, budget smart, pack essentials, and sync everything with your n8n workspace.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span class="stat-value" id="stat-total-trips">0</span>
+              <span class="stat-label">Planned Trips</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value" id="stat-total-budget">$0</span>
+              <span class="stat-label">Total Budgeted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2>Your Adventures</h2>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Trips</button>
+            <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+            <button class="filter-tab" data-filter="past">Past</button>
+          </div>
+        </div>
+
+        <!-- Trips Grid -->
+        <div class="trips-grid" id="trips-grid-container">
+          <!-- Create Trip Action Card -->
+          <div class="create-trip-card" id="card-new-trip-trigger">
+            <div class="card-inner">
+              <div class="plus-icon-container">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </div>
+              <h3>Plan a New Adventure</h3>
+              <p>Set a destination, dates, budget and start designing your dream trip.</p>
+            </div>
+          </div>
+          
+          <!-- Dynamic trip cards will be rendered here by JS -->
+        </div>
+      </section>
+
+      <!-- VIEW 2: Trip Detail Page -->
+      <section class="view-section" id="detail-view">
+        <!-- Back and Action Panel -->
+        <div class="detail-header">
+          <button class="btn btn-icon-text" id="btn-back-dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Dashboard
+          </button>
+          
+          <div class="detail-actions">
+            <!-- n8n Sync Button -->
+            <button class="btn btn-accent" id="btn-sync-webhook">
+              <svg class="sync-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+              <span id="sync-btn-text">Sync to Cloud</span>
+            </button>
+            <button class="btn btn-secondary" id="btn-delete-trip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <!-- Banner Card -->
+        <div class="trip-detail-banner" id="trip-detail-banner-bg">
+          <div class="banner-overlay"></div>
+          <div class="banner-content">
+            <div class="banner-tags" id="trip-tags">
+              <span class="badge badge-primary" id="tag-style">Adventure</span>
+              <span class="badge badge-secondary" id="tag-companion">Solo</span>
+            </div>
+            <h1 id="trip-destination-title">Destination</h1>
+            <p class="banner-dates">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="18" y2="10"></line></svg>
+              <span id="trip-dates-text">Jan 01 - Jan 08, 2026</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Workspace Grid Layout -->
+        <div class="workspace-grid">
+          
+          <!-- Column 1: Itinerary & Map -->
+          <div class="workspace-column flex-2">
+            
+            <!-- Itinerary Section -->
+            <div class="panel glass-panel">
+              <div class="panel-header">
+                <div class="header-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="18" y2="10"></line></svg>
+                  <h3>Itinerary Timeline</h3>
+                </div>
+                <button class="btn btn-sm btn-primary" id="btn-add-activity">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Add Activity
+                </button>
+              </div>
+              
+              <!-- Day Selection Tabs -->
+              <div class="day-tabs-scroll">
+                <div class="day-tabs" id="itinerary-day-tabs">
+                  <!-- JS dynamically inserts day tabs here -->
+                </div>
+              </div>
+
+              <!-- Activities list for selected day -->
+              <div class="timeline-container">
+                <div class="timeline-track"></div>
+                <div class="activities-list" id="activities-list-container">
+                  <!-- Dynamic itinerary items for selected day go here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Map Placeholder -->
+            <div class="panel glass-panel">
+              <div class="panel-header">
+                <div class="header-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                  <h3>Route Planner & Maps</h3>
+                </div>
+              </div>
+              <div class="mock-map-container" id="mock-map">
+                <!-- SVG map rendering paths & nodes -->
+                <div class="map-coordinates" id="map-coords">Lat: 0.00, Long: 0.00</div>
+                <svg class="map-svg" viewBox="0 0 400 200" id="map-routes-svg">
+                  <!-- SVG route segments will be drawn here dynamically -->
+                </svg>
+                <div class="map-markers" id="map-markers-container">
+                  <!-- Floating markers -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Budget & Packing -->
+          <div class="workspace-column flex-1">
+            
+            <!-- Weather Widget (Mocked Destination Weather) -->
+            <div class="panel glass-panel weather-card" id="weather-card">
+              <div class="weather-content">
+                <div class="weather-main">
+                  <div class="weather-temp" id="weather-temp">24°C</div>
+                  <div class="weather-desc" id="weather-desc">Sunny & Pleasant</div>
+                  <div class="weather-loc" id="weather-loc">Paris, France</div>
+                </div>
+                <div class="weather-icon-container" id="weather-icon-placeholder">
+                  <!-- Sunshine SVG -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="weather-icon animated-spin"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Budget Tracker -->
+            <div class="panel glass-panel">
+              <div class="panel-header">
+                <div class="header-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  <h3>Budget Tracker</h3>
+                </div>
+              </div>
+              
+              <div class="budget-summary">
+                <div class="budget-chart-container">
+                  <svg class="doughnut-chart" width="120" height="120" viewBox="0 0 42 42">
+                    <circle class="chart-bg" cx="21" cy="21" r="15.915" fill="transparent" stroke="rgba(255,255,255,0.05)" stroke-width="4"></circle>
+                    <circle class="chart-progress" id="budget-donut-ring" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--primary)" stroke-width="4.2" stroke-dasharray="100 0" stroke-dashoffset="25"></circle>
+                  </svg>
+                  <div class="chart-text">
+                    <span id="budget-percent-label">0%</span>
+                    <span class="label">Spent</span>
+                  </div>
+                </div>
+                
+                <div class="budget-details">
+                  <div class="detail-item">
+                    <span class="label">Limit</span>
+                    <span class="val" id="budget-limit-display">$0</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="label">Expenses</span>
+                    <span class="val" id="budget-spent-display">$0</span>
+                  </div>
+                  <div class="detail-item" id="budget-rem-container">
+                    <span class="label">Remaining</span>
+                    <span class="val text-success" id="budget-remaining-display">$0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Add Expense Form -->
+              <form class="expense-form" id="add-expense-form">
+                <div class="form-row">
+                  <input type="text" placeholder="Expense description..." id="expense-desc" required>
+                </div>
+                <div class="form-row split">
+                  <input type="number" placeholder="Cost ($)" id="expense-amount" min="1" step="any" required>
+                  <select id="expense-category" required>
+                    <option value="" disabled selected>Category</option>
+                    <option value="lodging">🏨 Lodging</option>
+                    <option value="food">🍔 Food</option>
+                    <option value="transit">✈️ Transport</option>
+                    <option value="activities">🎟️ Activities</option>
+                    <option value="misc">🛍️ Misc</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-secondary btn-full">Add Expense</button>
+              </form>
+
+              <!-- Expenses List -->
+              <div class="expense-list-section">
+                <h4>Expense Breakdown</h4>
+                <div class="expense-items" id="expense-list-container">
+                  <!-- Dynamic expenses go here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Packing Checklist -->
+            <div class="panel glass-panel">
+              <div class="panel-header">
+                <div class="header-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <h3>Packing Checklist</h3>
+                </div>
+              </div>
+
+              <!-- Checklist Progress -->
+              <div class="checklist-progress-container">
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" id="packing-progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="progress-label">
+                  <span id="packing-progress-text">0 / 0 Packed</span>
+                  <span id="packing-progress-percentage">0%</span>
+                </div>
+              </div>
+
+              <!-- Add custom packing item -->
+              <form class="packing-add-form" id="add-packing-form">
+                <input type="text" placeholder="Add custom item..." id="packing-item-name" required>
+                <button type="submit" class="btn btn-sm btn-secondary">Add</button>
+              </form>
+
+              <!-- Grouped Checklists -->
+              <div class="packing-categories" id="packing-categories-container">
+                <!-- Grouped categories will render dynamically here -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL 1: Create New Trip -->
+  <div class="modal-overlay" id="modal-create-trip">
+    <div class="modal glass-modal">
+      <div class="modal-header">
+        <h3>Design Your Adventure</h3>
+        <button class="modal-close" id="btn-close-trip-modal">&times;</button>
+      </div>
+      <form id="create-trip-form">
+        <div class="form-group">
+          <label for="trip-dest">Destination</label>
+          <input type="text" id="trip-dest" placeholder="e.g., Kyoto, Japan" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="trip-start">Start Date</label>
+            <input type="date" id="trip-start" required>
+          </div>
+          <div class="form-group">
+            <label for="trip-end">End Date</label>
+            <input type="date" id="trip-end" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="trip-budget">Budget Limit ($)</label>
+            <input type="number" id="trip-budget" placeholder="e.g., 2500" required>
+          </div>
+          <div class="form-group">
+            <label for="trip-style">Travel Style</label>
+            <select id="trip-style" required>
+              <option value="Adventure">🧗 Adventure</option>
+              <option value="Relaxing">🏖️ Relaxing</option>
+              <option value="Cultural">🏛️ Cultural</option>
+              <option value="Foodie">🍜 Foodie</option>
+              <option value="Leisure">🚶 Leisure</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="trip-companion">Travel Companions</label>
+          <select id="trip-companion" required>
+            <option value="Solo">🙋 Solo</option>
+            <option value="Couple">👩‍❤️‍👨 Couple</option>
+            <option value="Family">👨‍👩‍👧‍👦 Family</option>
+            <option value="Friends">👯 Friends</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Create Trip Itinerary</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Add Activity -->
+  <div class="modal-overlay" id="modal-add-activity">
+    <div class="modal glass-modal">
+      <div class="modal-header">
+        <h3>Add Timeline Event</h3>
+        <button class="modal-close" id="btn-close-activity-modal">&times;</button>
+      </div>
+      <form id="add-activity-form">
+        <div class="form-group">
+          <label for="activity-title">Activity Title</label>
+          <input type="text" id="activity-title" placeholder="e.g., Fushimi Inari Shrine Visit" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="activity-time">Start Time</label>
+            <input type="time" id="activity-time" required>
+          </div>
+          <div class="form-group">
+            <label for="activity-cost">Cost ($)</label>
+            <input type="number" id="activity-cost" min="0" value="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="activity-cat">Category</label>
+          <select id="activity-cat" required>
+            <option value="sightseeing">👁️ Sightseeing</option>
+            <option value="dining">🍜 Dining / Food</option>
+            <option value="activity">🎯 Activity / Tour</option>
+            <option value="transit">✈️ Transit / Flight</option>
+            <option value="lodging">🏨 Lodging check-in</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="activity-notes">Notes / Location Details</label>
+          <textarea id="activity-notes" rows="3" placeholder="Add specific addresses, links or reservation numbers..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Add to Timeline</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: n8n Integration Settings -->
+  <div class="modal-overlay" id="modal-webhook-settings">
+    <div class="modal glass-modal">
+      <div class="modal-header">
+        <h3>n8n Webhook Settings</h3>
+        <button class="modal-close" id="btn-close-webhook-modal">&times;</button>
+      </div>
+      <form id="webhook-settings-form">
+        <div class="form-group">
+          <label for="settings-webhook-url">n8n Production Webhook URL</label>
+          <input type="url" id="settings-webhook-url" placeholder="https://..." value="https://siddhib.app.n8n.cloud/webhook/4e71779d-7849-47b2-a9b4-34d8e398dd91" required>
+          <p class="form-helper">This is the production endpoint that receives full trip details when you click "Sync to Cloud".</p>
+        </div>
+        <div class="webhook-test-results" id="webhook-test-response" style="display: none;">
+          <!-- Displays success/error status -->
+        </div>
+        <div class="form-row split">
+          <button type="button" class="btn btn-secondary" id="btn-test-webhook">Test Webhook</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Floating AI Assistant Chat Widget -->
+  <div class="ai-assistant-widget" id="ai-chat-widget">
+    <button class="ai-chat-btn" id="btn-toggle-ai-chat" title="AI Travel Assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span class="ai-badge-new">Help</span>
+    </button>
+    
+    <div class="ai-chat-container glass-panel" id="ai-chat-container">
+      <div class="ai-chat-header">
+        <div class="ai-chat-title-group">
+          <div class="ai-bot-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M12 2v9"></path><path d="M8 5h8"></path></svg>
+          </div>
+          <div>
+            <h4>WanderBot AI</h4>
+            <span class="ai-status"><span class="pulse-dot-green"></span>Assistant Online</span>
+          </div>
+        </div>
+        <button class="ai-chat-close" id="btn-close-ai-chat">&times;</button>
+      </div>
+      
+      <div class="ai-messages-log" id="ai-messages-log">
+        <div class="ai-msg bot">
+          <div class="ai-msg-content">
+            Hello! I am **WanderBot**, your AI travel companion. I can suggest destinations, dining spots, or help you fill out your itinerary. Try clicking one of the suggestions below!
+          </div>
+        </div>
+      </div>
+      
+      <div class="ai-quick-suggestions" id="ai-quick-suggestions">
+        <button class="quick-chip" data-prompt="Suggest dining spots in Kyoto">🍣 Kyoto Dining</button>
+        <button class="quick-chip" data-prompt="Recommend top sights in Paris">🗼 Paris Sights</button>
+        <button class="quick-chip" data-prompt="How do I get the most from my budget?">💰 Budget Tips</button>
+        <button class="quick-chip" data-prompt="Suggest travel packing essentials">🎒 Travel Packing</button>
+      </div>
+      
+      <form class="ai-chat-form" id="ai-chat-form">
+        <input type="text" id="ai-chat-input" placeholder="Ask WanderBot..." required autocomplete="off">
+        <button type="submit" class="btn-send-message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
